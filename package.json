@@ -1,0 +1,20 @@
+{
+  "name": "polla",
+  "version": "1.0.0",
+  "description": "polla mundialera",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "mongodb": "^3.0.1",
+    "mongoose": "^4.13.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.3"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Sereschen",
+  "license": "ISC"
+}
