@@ -2,8 +2,9 @@ const express = require("express");
 const Services = require("./services");
 const services = new Services();
 const app = express();
+const port = process.env.PORT || 5000;
 
-app.listen(3000, () => console.log("listening on port 3000!"));
+app.set("port", port);
 
 app.get("/matches", (req, res) => {
   console.log("It works");
@@ -43,3 +44,4 @@ app.get("/ranking", (req, res) => {
       };
     });
 });
+app.listen(port, () => console.log("listening on port 3000!"));
