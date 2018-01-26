@@ -7,11 +7,14 @@ function Mongo() {
   return new Promise(resolve => {
     const MongoClient = require("mongodb").MongoClient;
     let db = null;
-    MongoClient.connect("mongodb://localhost:27017", (err, database) => {
-      if (err) throw err;
-      db = database.db("polla");
-      resolve(db);
-    });
+    MongoClient.connect(
+      "mongodb://sereschen:sergio316@ds115758.mlab.com:15758/polla",
+      (err, database) => {
+        if (err) throw err;
+        db = database.db("polla");
+        resolve(db);
+      }
+    );
   });
 }
 
