@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.set("port", port);
-
+app.use(express.static("public"));
 app.get("/matches", (req, res) => {
   console.log("It works");
   services
