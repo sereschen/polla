@@ -23,7 +23,11 @@ const getMatches = () => {
     Mongo().then(db => {
       db
         .collection("matches")
-        .find()
+        .aggregate()
+        .lookup({ from: "teams", localField: "team1", foreignField: "_id", as: "team1" })
+        .lookup({ from: "teams", localField: "team2", foreignField: "_id", as: "team2" })
+        .unwind("$team1")
+        .unwind("$team2")
         .toArray((err, matches) => {
           !err ? resolve(matches) : reject(err);
         });

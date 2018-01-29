@@ -10,14 +10,18 @@ import PollaNavbar from "./components/PollaNavbar/PollaNavbar";
 const history = syncHistoryWithStore(hashHistory, store);
 
 const app = document.getElementById("app");
+
+const styles = {
+  marginTop: "100px"
+};
 ReactDOM.render(
-  <div>
+  <div style={styles}>
     <PollaNavbar />
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={Home} />
         <Route path="/home" component={Home} />
-        <Route path="/about" component={null} />
+        <Route path="/about" component={Home} />
       </Router>
     </Provider>
   </div>,

@@ -1,12 +1,15 @@
-
+import { actions } from "../actions";
 const initialState = {
-    matches : []
-}
-
+  matches: []
+};
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case "test": {
+    case actions.GET_MATCHES: {
+      return {
+        ...state,
+        matches: action.payload
+      };
     }
 
     default: {
