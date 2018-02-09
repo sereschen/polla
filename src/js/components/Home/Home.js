@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getMatches } from "../../actions";
+import Match from "../Match/Match";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -24,12 +25,8 @@ export default class Home extends Component {
   render() {
     const { matches } = this.props;
     const matchesList = matches.map(item => {
-      return (
-        <li key={item._id}>
-          {item._id}: {item.team1.name} vs {item.team2.name}
-        </li>
-      );
+      return <Match key={item._id} match={item} />;
     });
-    return <ul>{matchesList}</ul>;
+    return <div>{matchesList}</div>;
   }
 }

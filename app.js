@@ -2,6 +2,7 @@ const express = require("express");
 const Services = require("./services");
 const services = new Services();
 const app = express();
+const axios = require("axios");
 var jwt = require("express-jwt");
 var jwks = require("jwks-rsa");
 
@@ -29,7 +30,6 @@ app.get("/matches", (req, res) => {
     .getMatches()
     .then(
       matches => {
-        console.log(matches);
         res.send(matches);
       },
       error => res.send(error)
@@ -42,7 +42,6 @@ app.get("/teams", (req, res) => {
     .getTeams()
     .then(
       teams => {
-        console.log(teams);
         res.send(teams);
       },
       error => res.send(error)
@@ -50,18 +49,43 @@ app.get("/teams", (req, res) => {
     .catch(error => console.log(error));
 });
 
-app.get("/ranking", (req, res) => {
-  let users = [];
-  db
-    .collection("users")
-    .find()
-    .toArray((err, items) => {
-      return resolve => {
-        resolve(items);
-      };
+app.get("/update-teams", (req, res) => {
+  services
+    .getTeams()
+    .then(teams => {
+      var newteams = teams.map(team => {
+        return axios
+          .get("https://restcountries.eu/rest/v2/name/" + team.name)
+          .then(res => {
+            let data = res.data;
+            if (data) {
+              return {
+                es: data[0].translations.es,
+                _id: team._id,
+                flag: data[0].flag,
+                name: team.name
+              };
+            } else {
+              return team;
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            throw error;
+          });
+      });
+      Promise.all(newteams).then(results => {
+        results.forEach(team => {
+          services.updateTeam(team);
+        });
+        res.send("It Worked!");
+      });
+    })
+    .catch(error => {
+      console.log(error);
+      throw error;
     });
 });
-
 
 app.get("*", function(req, res) {
   res.redirect(req.url);

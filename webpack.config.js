@@ -19,7 +19,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: "style!css?modules!sass"
+        loader: "style-loader!css-loader?modules-loader!sass-loader"
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
